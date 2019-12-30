@@ -1,0 +1,26 @@
+package com.invillia.ThunderCoin.domain.response;
+
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.Data;
+import lombok.NoArgsConstructor;
+
+@Data
+@Builder
+@NoArgsConstructor
+@AllArgsConstructor
+public class OriginResponse {
+
+    private Long id;
+
+    private String name;
+
+    private boolean active;
+
+    private String originType;
+
+    private String createdAt;
+
+    private String updatedAt;
+
+}
