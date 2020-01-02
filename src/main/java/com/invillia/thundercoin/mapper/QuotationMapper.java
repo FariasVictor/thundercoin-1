@@ -1,7 +1,7 @@
-package com.invillia.ThunderCoin.mapper;
+package com.invillia.thundercoin.mapper;
 
-import com.invillia.ThunderCoin.domain.Quotation;
-import com.invillia.ThunderCoin.domain.request.QuotationRequest;
+import com.invillia.thundercoin.domain.Quotation;
+import com.invillia.thundercoin.domain.request.QuotationRequest;
 import org.springframework.stereotype.Component;
 
 @Component

@@ -1,4 +1,4 @@
-package com.invillia.ThunderCoin.exception;
+package com.invillia.thundercoin.exception;
 
 public class OriginTypeNotFoundException extends RuntimeException {
 

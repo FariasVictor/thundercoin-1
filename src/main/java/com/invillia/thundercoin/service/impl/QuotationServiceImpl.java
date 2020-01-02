@@ -1,11 +1,11 @@
-package com.invillia.ThunderCoin.service.impl;
+package com.invillia.thundercoin.service.impl;
 
-import com.invillia.ThunderCoin.domain.Quotation;
-import com.invillia.ThunderCoin.domain.request.QuotationRequest;
-import com.invillia.ThunderCoin.domain.response.QuotationResponse;
-import com.invillia.ThunderCoin.mapper.QuotationMapper;
-import com.invillia.ThunderCoin.repository.QuotationRepository;
-import com.invillia.ThunderCoin.service.QuotationService;
+import com.invillia.thundercoin.domain.Quotation;
+import com.invillia.thundercoin.domain.request.QuotationRequest;
+import com.invillia.thundercoin.domain.response.QuotationResponse;
+import com.invillia.thundercoin.mapper.QuotationMapper;
+import com.invillia.thundercoin.repository.QuotationRepository;
+import com.invillia.thundercoin.service.QuotationService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 

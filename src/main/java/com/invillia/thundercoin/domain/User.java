@@ -1,6 +1,6 @@
-package com.invillia.ThunderCoin.domain;
+package com.invillia.thundercoin.domain;
 
-import com.invillia.ThunderCoin.enums.UserStatusEnum;
+import com.invillia.thundercoin.enums.UserStatusEnum;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;

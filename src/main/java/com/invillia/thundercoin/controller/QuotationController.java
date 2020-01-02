@@ -1,7 +1,7 @@
-package com.invillia.ThunderCoin.controller;
+package com.invillia.thundercoin.controller;
 
-import com.invillia.ThunderCoin.domain.request.QuotationRequest;
-import com.invillia.ThunderCoin.service.impl.QuotationServiceImpl;
+import com.invillia.thundercoin.domain.request.QuotationRequest;
+import com.invillia.thundercoin.service.impl.QuotationServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.ResponseEntity;

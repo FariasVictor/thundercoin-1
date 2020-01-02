@@ -1,10 +1,10 @@
-package com.invillia.ThunderCoin.mapper;
+package com.invillia.thundercoin.mapper;
 
-import com.invillia.ThunderCoin.domain.Origin;
-import com.invillia.ThunderCoin.domain.request.OriginRequest;
-import com.invillia.ThunderCoin.domain.response.OriginResponse;
-import com.invillia.ThunderCoin.enums.OriginType;
-import com.invillia.ThunderCoin.exception.OriginTypeNotFoundException;
+import com.invillia.thundercoin.domain.Origin;
+import com.invillia.thundercoin.domain.request.OriginRequest;
+import com.invillia.thundercoin.domain.response.OriginResponse;
+import com.invillia.thundercoin.enums.OriginType;
+import com.invillia.thundercoin.exception.OriginTypeNotFoundException;
 import org.springframework.stereotype.Component;
 
 import java.time.format.DateTimeFormatter;

@@ -1,4 +1,4 @@
-package com.invillia.ThunderCoin.domain;
+package com.invillia.thundercoin.domain;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;

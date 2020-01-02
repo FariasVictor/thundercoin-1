@@ -1,13 +1,10 @@
-package com.invillia.ThunderCoin.mapper;
+package com.invillia.thundercoin.mapper;
 
-import com.invillia.ThunderCoin.domain.User;
-import com.invillia.ThunderCoin.domain.request.UserSaveRequest;
-import com.invillia.ThunderCoin.domain.request.UserUpdateRequest;
-import com.invillia.ThunderCoin.domain.response.UserResponse;
-import com.invillia.ThunderCoin.enums.UserStatusEnum;
+import com.invillia.thundercoin.domain.User;
+import com.invillia.thundercoin.domain.request.userRequest.UserSaveRequest;
+import com.invillia.thundercoin.domain.response.UserResponse;
 import org.springframework.stereotype.Component;
 
-import java.math.BigDecimal;
 import java.util.List;
 import java.util.stream.Collectors;
 

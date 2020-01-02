@@ -1,9 +1,9 @@
-package com.invillia.ThunderCoin.mapper;
+package com.invillia.thundercoin.mapper;
 
-import com.invillia.ThunderCoin.domain.Origin;
-import com.invillia.ThunderCoin.domain.Transaction;
-import com.invillia.ThunderCoin.domain.request.TransactionRequest;
-import com.invillia.ThunderCoin.domain.response.TransactionResponse;
+import com.invillia.thundercoin.domain.Origin;
+import com.invillia.thundercoin.domain.Transaction;
+import com.invillia.thundercoin.domain.request.TransactionRequest;
+import com.invillia.thundercoin.domain.response.TransactionResponse;
 import org.springframework.stereotype.Component;
 
 import java.time.format.DateTimeFormatter;

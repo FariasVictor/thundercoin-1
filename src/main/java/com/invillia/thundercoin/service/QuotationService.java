@@ -1,8 +1,7 @@
-package com.invillia.ThunderCoin.service;
+package com.invillia.thundercoin.service;
 
-import com.invillia.ThunderCoin.domain.request.QuotationRequest;
-import com.invillia.ThunderCoin.domain.response.QuotationResponse;
-import org.springframework.stereotype.Service;
+import com.invillia.thundercoin.domain.request.QuotationRequest;
+import com.invillia.thundercoin.domain.response.QuotationResponse;
 
 import java.util.List;
 

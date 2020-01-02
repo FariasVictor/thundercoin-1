@@ -1,7 +1,7 @@
-package com.invillia.ThunderCoin.service;
+package com.invillia.thundercoin.service;
 
-import com.invillia.ThunderCoin.domain.request.OriginRequest;
-import com.invillia.ThunderCoin.domain.response.OriginResponse;
+import com.invillia.thundercoin.domain.request.OriginRequest;
+import com.invillia.thundercoin.domain.response.OriginResponse;
 
 import java.util.List;
 

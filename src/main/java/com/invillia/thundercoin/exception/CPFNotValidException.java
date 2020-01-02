@@ -1,7 +1,15 @@
-package com.invillia.ThunderCoin.exception;
+package com.invillia.thundercoin.exception;
 
+import lombok.Getter;
+import org.springframework.http.HttpStatus;
+import org.springframework.web.bind.annotation.RequestBody;
+
+@Getter
 public class CPFNotValidException extends RuntimeException {
-    public CPFNotValidException(final String message) {
+    private final HttpStatus status;
+
+    public CPFNotValidException(final String message,final HttpStatus status) {
         super(message);
+        this.status = status;
     }
 }

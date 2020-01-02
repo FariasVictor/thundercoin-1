@@ -1,4 +1,4 @@
-package com.invillia.ThunderCoin.enums;
+package com.invillia.thundercoin.enums;
 
 public enum OriginType {
 

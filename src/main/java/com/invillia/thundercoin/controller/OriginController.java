@@ -1,9 +1,9 @@
-package com.invillia.ThunderCoin.controller;
+package com.invillia.thundercoin.controller;
 
-import com.invillia.ThunderCoin.domain.request.OriginRequest;
-import com.invillia.ThunderCoin.domain.response.OriginResponse;
-import com.invillia.ThunderCoin.service.OriginService;
-import com.invillia.ThunderCoin.service.impl.OriginServiceImpl;
+import com.invillia.thundercoin.domain.request.OriginRequest;
+import com.invillia.thundercoin.domain.response.OriginResponse;
+import com.invillia.thundercoin.service.OriginService;
+import com.invillia.thundercoin.service.impl.OriginServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.ResponseEntity;

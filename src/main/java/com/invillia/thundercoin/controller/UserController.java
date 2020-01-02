@@ -1,9 +1,8 @@
-package com.invillia.ThunderCoin.controller;
+package com.invillia.thundercoin.controller;
 
-import com.invillia.ThunderCoin.domain.User;
-import com.invillia.ThunderCoin.domain.request.UserSaveRequest;
-import com.invillia.ThunderCoin.domain.response.UserResponse;
-import com.invillia.ThunderCoin.service.impl.UserServiceImp;
+import com.invillia.thundercoin.domain.request.userRequest.UserSaveRequest;
+import com.invillia.thundercoin.domain.response.UserResponse;
+import com.invillia.thundercoin.service.impl.UserServiceImp;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;

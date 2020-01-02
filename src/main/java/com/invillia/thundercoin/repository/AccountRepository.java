@@ -1,6 +1,6 @@
-package com.invillia.ThunderCoin.repository;
+package com.invillia.thundercoin.repository;
 
-import com.invillia.ThunderCoin.domain.Account;
+import com.invillia.thundercoin.domain.Account;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 

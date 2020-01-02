@@ -1,14 +1,15 @@
-package com.invillia.ThunderCoin.service.impl;
+package com.invillia.thundercoin.service.impl;
 
 import br.com.caelum.stella.validation.CPFValidator;
-import com.invillia.ThunderCoin.domain.User;
-import com.invillia.ThunderCoin.domain.request.UserSaveRequest;
-import com.invillia.ThunderCoin.domain.response.UserResponse;
-import com.invillia.ThunderCoin.exception.CPFNotValidException;
-import com.invillia.ThunderCoin.exception.ObjectNotFoundException;
-import com.invillia.ThunderCoin.mapper.UserMapper;
-import com.invillia.ThunderCoin.repository.UserRepository;
-import com.invillia.ThunderCoin.service.UserService;
+import com.invillia.thundercoin.domain.User;
+import com.invillia.thundercoin.domain.request.userRequest.UserSaveRequest;
+import com.invillia.thundercoin.domain.response.UserResponse;
+import com.invillia.thundercoin.exception.CPFNotValidException;
+import com.invillia.thundercoin.exception.ObjectNotFoundException;
+import com.invillia.thundercoin.mapper.UserMapper;
+import com.invillia.thundercoin.repository.UserRepository;
+import com.invillia.thundercoin.service.UserService;
+import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -42,10 +43,10 @@ public class UserServiceImp implements UserService {
     @Override
     public Long save(final UserSaveRequest userSaveRequest) {
         if (!validateCPF(userSaveRequest.getCpf()))
-            throw new CPFNotValidException("CPF Inválido!");
+            throw new CPFNotValidException("CPF Inválido!", HttpStatus.BAD_REQUEST);
 
         if(userRepository.existsByCpf(userSaveRequest.getCpf())){
-            throw new CPFNotValidException("CPF já cadastrado!");
+            throw new CPFNotValidException("CPF já cadastrado!", HttpStatus.CONFLICT);
         }
 
         User user = userMapper.userSaveRequestToUser(userSaveRequest);

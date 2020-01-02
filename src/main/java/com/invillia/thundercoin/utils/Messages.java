@@ -1,4 +1,4 @@
-package com.invillia.ThunderCoin.utils;
+package com.invillia.thundercoin.utils;
 
 public class Messages {
 

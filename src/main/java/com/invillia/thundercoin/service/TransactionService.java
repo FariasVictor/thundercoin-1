@@ -1,9 +1,8 @@
-package com.invillia.ThunderCoin.service;
+package com.invillia.thundercoin.service;
 
-import com.invillia.ThunderCoin.domain.Transaction;
-import com.invillia.ThunderCoin.domain.request.TransactionRequest;
-import com.invillia.ThunderCoin.domain.response.TransactionResponse;
-import org.springframework.stereotype.Service;
+import com.invillia.thundercoin.domain.Transaction;
+import com.invillia.thundercoin.domain.request.TransactionRequest;
+import com.invillia.thundercoin.domain.response.TransactionResponse;
 
 import java.util.List;
 

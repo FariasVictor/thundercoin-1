@@ -1,13 +1,13 @@
-package com.invillia.ThunderCoin.service.impl;
+package com.invillia.thundercoin.service.impl;
 
-import com.invillia.ThunderCoin.domain.Origin;
-import com.invillia.ThunderCoin.domain.request.OriginRequest;
-import com.invillia.ThunderCoin.domain.response.OriginResponse;
+import com.invillia.thundercoin.domain.Origin;
+import com.invillia.thundercoin.domain.request.OriginRequest;
+import com.invillia.thundercoin.domain.response.OriginResponse;
 
-import com.invillia.ThunderCoin.exception.OriginTypeNotFoundException;
-import com.invillia.ThunderCoin.mapper.OriginMapper;
-import com.invillia.ThunderCoin.repository.OriginRepository;
-import com.invillia.ThunderCoin.service.OriginService;
+import com.invillia.thundercoin.exception.OriginTypeNotFoundException;
+import com.invillia.thundercoin.mapper.OriginMapper;
+import com.invillia.thundercoin.repository.OriginRepository;
+import com.invillia.thundercoin.service.OriginService;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import org.springframework.stereotype.Service;

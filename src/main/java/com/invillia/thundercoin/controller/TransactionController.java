@@ -1,4 +1,4 @@
-package com.invillia.ThunderCoin.controller;
+package com.invillia.thundercoin.controller;
 
 public class TransactionController {
 }
