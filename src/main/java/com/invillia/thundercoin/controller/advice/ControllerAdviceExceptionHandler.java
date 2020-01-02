@@ -4,14 +4,20 @@ import com.invillia.thundercoin.exception.CPFNotValidException;
 import com.invillia.thundercoin.exception.ObjectNotFoundException;
 import com.invillia.thundercoin.exception.OriginTypeNotFoundException;
 import com.invillia.thundercoin.exception.ValueNotAllowed;
+import org.springframework.context.support.DefaultMessageSourceResolvable;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.validation.FieldError;
+import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 
 import javax.servlet.http.HttpServletRequest;
 import java.text.SimpleDateFormat;
+import java.util.List;
+import java.util.Map;
+import java.util.stream.Collectors;
 
 @ControllerAdvice
 public class ControllerAdviceExceptionHandler {
@@ -73,5 +79,22 @@ public class ControllerAdviceExceptionHandler {
                 request.getRequestURI()
         );
         return ResponseEntity.status(status).body(error);
+    }
+
+    @ExceptionHandler(MethodArgumentNotValidException.class)
+    public ResponseEntity<Map<String, List<String>>> handleMethodArgumentNotValidException(final MethodArgumentNotValidException e) {
+        final Map<String, List<String>> result = e.getBindingResult().getAllErrors()
+                .stream()
+                .map(it -> (FieldError) it)
+                .collect(
+                        Collectors.groupingBy(
+                                FieldError::getField,
+                                Collectors.mapping(
+                                        DefaultMessageSourceResolvable::getDefaultMessage,
+                                        Collectors.toList()
+                                )
+                        )
+                );
+        return ResponseEntity.badRequest().body(result);
     }
 }
