@@ -6,6 +6,7 @@ import com.invillia.thundercoin.domain.Quotation;
 import com.invillia.thundercoin.domain.Transaction;
 import com.invillia.thundercoin.domain.request.TransactionRequest;
 import com.invillia.thundercoin.domain.response.TransactionResponse;
+import com.invillia.thundercoin.enums.OriginType;
 import com.invillia.thundercoin.exception.ObjectNotFoundException;
 import com.invillia.thundercoin.mapper.TransactionMapper;
 import com.invillia.thundercoin.repository.AccountRepository;
@@ -21,6 +22,7 @@ import java.util.List;
 @Service
 public class TransactionServiceImp implements TransactionService {
 
+    private final AccountServiceImpl accountService;
     private final TransactionRepository transactionRepository;
     private final TransactionMapper transactionMapper;
     private final QuotationRepository quotationRepository;
@@ -28,11 +30,12 @@ public class TransactionServiceImp implements TransactionService {
     private final AccountRepository accountRepository;
 
     @Autowired
-    public TransactionServiceImp(final TransactionRepository transactionRepository,
+    public TransactionServiceImp(final AccountServiceImpl accountService, final TransactionRepository transactionRepository,
                                  final TransactionMapper transactionMapper,
                                  final QuotationRepository quotationRepository,
                                  final OriginRepository originRepository,
                                  final AccountRepository accountRepository) {
+        this.accountService = accountService;
         this.transactionRepository = transactionRepository;
         this.transactionMapper = transactionMapper;
         this.quotationRepository = quotationRepository;
@@ -61,7 +64,7 @@ public class TransactionServiceImp implements TransactionService {
         final Quotation quotation = quotationRepository.findById(transactionRequest.getQuotationId())
                 .orElseThrow(() -> new ObjectNotFoundException("Quotação não encontrada!"));
 
-        final Account account = accountRepository.findById(transactionRequest.getUserId())
+        final Account account = accountRepository.findById(transactionRequest.getAccountId())
                 .orElseThrow(() -> new ObjectNotFoundException("Usuário não encontrada!"));
 
         final Origin origin = originRepository.findById(transactionRequest.getOriginId())
@@ -72,6 +75,16 @@ public class TransactionServiceImp implements TransactionService {
        transaction.setOriginId(origin);
        transaction.setQuotationId(quotation);
        transaction.setAccountId(account);
+
+       if(origin.getOriginType() == OriginType.INPUT){
+           accountService.deposit(transaction.getValue(), transaction.getAccountId());
+       }else{
+           accountService.withdraw(transaction.getValue(), transaction.getAccountId());
+
+       }
+
+       accountRepository.save(account);
+       transaction.setValue(transactionRequest.getValue());
 
        return transactionRepository.save(transaction);
     }

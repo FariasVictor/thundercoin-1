@@ -17,7 +17,7 @@ public class QuotationResponse {
 
     private Long id;
 
-    private BigDecimal value;
+    private Double value;
 
     private LocalDateTime createdAt;
 

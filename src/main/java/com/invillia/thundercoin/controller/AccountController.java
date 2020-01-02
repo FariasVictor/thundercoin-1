@@ -1,7 +1,8 @@
 package com.invillia.thundercoin.controller;
 
+import com.invillia.thundercoin.domain.request.AccountRequest;
 import com.invillia.thundercoin.domain.request.QuotationRequest;
-import com.invillia.thundercoin.service.impl.QuotationServiceImpl;
+import com.invillia.thundercoin.service.AccountService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.ResponseEntity;
@@ -11,29 +12,28 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
-import javax.validation.Valid;
 import java.net.URI;
 
 @RestController
-@RequestMapping("/quotations")
-public class QuotationController {
+@RequestMapping("/accounts")
+public class AccountController {
 
-    private QuotationServiceImpl quotationServiceImpl;
+    private final AccountService accountService;
 
     @Autowired
-    public QuotationController(QuotationServiceImpl quotationServiceImpl) {
-        this.quotationServiceImpl = quotationServiceImpl;
+    public AccountController(final AccountService accountService) {
+        this.accountService = accountService;
     }
 
+
     @PostMapping
-    public HttpEntity<?> save(@RequestBody QuotationRequest quotationRequest){
-        Long id = quotationServiceImpl.save(quotationRequest);
+    public HttpEntity<?> save(@RequestBody AccountRequest accountRequest){
+        Long accountId = accountService.create(accountRequest).getId();
 
         final URI location = ServletUriComponentsBuilder.fromCurrentContextPath()
                 .path("/quotations/{id}")
-                .build(id);
+                .build(accountId);
 
         return ResponseEntity.created(location).build();
     }
-
 }

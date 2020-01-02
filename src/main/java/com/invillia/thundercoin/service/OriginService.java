@@ -8,13 +8,9 @@ import java.util.List;
 public interface OriginService {
 
      Long create(OriginRequest originRequest);
-
      List<OriginResponse> findAll();
-
      OriginResponse findById(Long id);
-
      void delete(Long id);
-
      void update(Long id, OriginRequest originRequest);
 
 }

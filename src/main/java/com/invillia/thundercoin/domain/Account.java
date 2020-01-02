@@ -34,7 +34,7 @@ public class Account {
     private User user;
 
     @Column(nullable = false)
-    private Double balance;
+    private Double balance = 0.0;
 
     @OneToMany(cascade = CascadeType.REMOVE)
     @Column(nullable = false)

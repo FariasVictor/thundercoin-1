@@ -11,5 +11,4 @@ public interface QuotationService {
      List<QuotationResponse> findAll();
      QuotationResponse findById(Long id);
      void update(QuotationRequest quotationRequest, Long id);
-     void delete(Long id);
 }

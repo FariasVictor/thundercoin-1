@@ -36,11 +36,4 @@ public class UserMapper {
 
         return user;
     }
-
-//    public void updateUserByUserUpdateRequest(User user, UserUpdateRequest userUpdateRequest) {
-//
-//        user.setName(userUpdateRequest.getName());
-//        user.setBalance(userUpdateRequest.getBalance());
-//        user.setStatus(UserStatusEnum.valueOf(userUpdateRequest.getStatus()));
-//    }
 }

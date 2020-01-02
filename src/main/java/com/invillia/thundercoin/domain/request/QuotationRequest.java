@@ -6,7 +6,6 @@ import lombok.NoArgsConstructor;
 
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.PositiveOrZero;
-import java.math.BigDecimal;
 
 @Data
 @NoArgsConstructor
@@ -15,9 +14,8 @@ public class QuotationRequest {
 
     @NotNull(message = "Valor não pode ser nulo")
     @PositiveOrZero(message = "Valor deve ser maior ou igual a 0")
-    private BigDecimal value;
+    private Double value;
 
     private Boolean active=true;
-
 
 }

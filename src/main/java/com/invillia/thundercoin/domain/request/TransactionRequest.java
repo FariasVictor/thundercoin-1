@@ -17,7 +17,7 @@ public class TransactionRequest {
 
     @NotNull(message = "O campo não pode ser nulo")
     @NotBlank(message = "O campo não pode estar em branco")
-    private Long userId;
+    private Long accountId;
 
     @NotNull(message = "O campo não pode ser nulo")
     @NotBlank(message = "O campo não pode estar em branco")
