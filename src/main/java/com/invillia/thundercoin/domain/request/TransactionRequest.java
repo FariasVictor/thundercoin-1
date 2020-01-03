@@ -26,4 +26,9 @@ public class TransactionRequest {
     @NotNull(message = "O campo não pode ser nulo")
     @NotBlank(message = "O campo não pode estar em branco")
     private Long quotationId;
+
+    @NotNull(message = "O campo não pode ser nulo")
+    @NotBlank(message = "O campo não pode estar em branco")
+    private String transactionType;
+
 }

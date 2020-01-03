@@ -1,7 +1,7 @@
 package com.invillia.thundercoin.domain;
 
-import com.invillia.thundercoin.enums.OriginType;
 import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import org.hibernate.annotations.CreationTimestamp;
@@ -10,8 +10,6 @@ import org.hibernate.annotations.UpdateTimestamp;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.EnumType;
-import javax.persistence.Enumerated;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -21,6 +19,7 @@ import java.util.List;
 
 @Data
 @Entity
+@Builder
 @NoArgsConstructor
 @AllArgsConstructor
 public class Origin {
@@ -44,10 +43,8 @@ public class Origin {
     @Column(name = "updated_at", nullable = false)
     private LocalDateTime updatedAt;
 
-    @Column(nullable = false)
-    private boolean active;
-
-    @Enumerated(EnumType.STRING)
-    private OriginType originType;
+    @Column
+    @Builder.Default
+    private boolean active = true;
 
 }

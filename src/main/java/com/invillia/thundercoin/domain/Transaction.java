@@ -1,5 +1,6 @@
 package com.invillia.thundercoin.domain;
 
+import com.invillia.thundercoin.enums.TransactionType;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -8,6 +9,8 @@ import org.hibernate.annotations.CreationTimestamp;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -37,6 +40,9 @@ public class Transaction {
     @ManyToOne
     @JoinColumn(name = "origin",nullable = false)
     private Origin originId;
+
+    @Enumerated(EnumType.STRING)
+    private TransactionType transactionType;
 
     @Column(nullable = false)
     private Double value;

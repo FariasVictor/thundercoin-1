@@ -40,8 +40,8 @@ public class User {
     @OneToOne(mappedBy = "user", cascade = CascadeType.REMOVE)
     private Account account;
 
-    @Column(nullable = false)
     @Builder.Default
+    @Column(nullable = false)
     @Enumerated(value = EnumType.STRING)
     private UserStatusEnum status = UserStatusEnum.ACTIVE;
 

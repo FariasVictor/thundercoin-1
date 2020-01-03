@@ -18,4 +18,7 @@ public class TransactionResponse {
     private String origin;
 
     private String quotation;
+
+    private String transactionType;
+
 }

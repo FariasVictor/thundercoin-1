@@ -1,4 +1,4 @@
-package com.invillia.thundercoin.domain.request.userRequest;
+package com.invillia.thundercoin.domain.request;
 
 import lombok.Data;
 

@@ -25,8 +25,8 @@ public class OriginServiceImpl implements OriginService {
 
 
     @Autowired
-    public OriginServiceImpl(OriginRepository oringinRepository, OriginMapper originMapper) {
-        this.originRepository = oringinRepository;
+    public OriginServiceImpl(OriginRepository originRepository, OriginMapper originMapper) {
+        this.originRepository = originRepository;
         this.originMapper = originMapper;
     }
 
@@ -53,6 +53,7 @@ public class OriginServiceImpl implements OriginService {
         return originMapper.originToOriginResponse(origin);
     }
 
+    @Transactional
     public void delete(final Long id) {
         final Origin origin = originRepository.findById(id).orElseThrow(() -> new OriginTypeNotFoundException(
                 "Id: " + id + " não encontrado!"
@@ -61,6 +62,7 @@ public class OriginServiceImpl implements OriginService {
         originRepository.deleteById(id);
     }
 
+    @Transactional
     public void update(final Long id, final OriginRequest originRequest) {
         final Origin origin = originRepository.findById(id).orElseThrow(() -> new OriginTypeNotFoundException(
                 "Id: " + id + " não encontrado!"

@@ -6,7 +6,7 @@ import com.invillia.thundercoin.domain.Quotation;
 import com.invillia.thundercoin.domain.Transaction;
 import com.invillia.thundercoin.domain.request.TransactionRequest;
 import com.invillia.thundercoin.domain.response.TransactionResponse;
-import com.invillia.thundercoin.enums.OriginType;
+import com.invillia.thundercoin.enums.TransactionType;
 import com.invillia.thundercoin.exception.ObjectNotFoundException;
 import com.invillia.thundercoin.mapper.TransactionMapper;
 import com.invillia.thundercoin.repository.AccountRepository;
@@ -16,6 +16,7 @@ import com.invillia.thundercoin.repository.TransactionRepository;
 import com.invillia.thundercoin.service.TransactionService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
@@ -44,14 +45,14 @@ public class TransactionServiceImp implements TransactionService {
     }
 
 
-    @Override
+    @Transactional
      public List<TransactionResponse> findAll() {
         final List<Transaction> transactions = transactionRepository.findAll();
 
         return transactionMapper.transactionToTransactionResponse(transactions);
     }
 
-    @Override
+    @Transactional
     public TransactionResponse findById(Long id) {
         final Transaction transaction = transactionRepository.findById(id)
                 .orElseThrow(() -> new ObjectNotFoundException("Transação não encontrada!"));
@@ -59,7 +60,7 @@ public class TransactionServiceImp implements TransactionService {
         return transactionMapper.transactionToTransactionResponse(transaction);
     }
 
-    @Override
+    @Transactional
     public Transaction save(TransactionRequest transactionRequest) {
         final Quotation quotation = quotationRepository.findById(transactionRequest.getQuotationId())
                 .orElseThrow(() -> new ObjectNotFoundException("Quotação não encontrada!"));
@@ -70,22 +71,35 @@ public class TransactionServiceImp implements TransactionService {
         final Origin origin = originRepository.findById(transactionRequest.getOriginId())
                 .orElseThrow(() -> new ObjectNotFoundException("Origem não encontrada!"));
 
+        if(!validateTypeTransaction(transactionRequest.getTransactionType())){
+            throw new ObjectNotFoundException("Tipo de conta inválida!");
+        }
+
        final Transaction transaction = transactionMapper.transactionRequestToTransaction(transactionRequest);
 
        transaction.setOriginId(origin);
        transaction.setQuotationId(quotation);
        transaction.setAccountId(account);
+       transaction.setTransactionType(TransactionType.valueOf(transactionRequest.getTransactionType()));
 
-       if(origin.getOriginType() == OriginType.INPUT){
+       if(transaction.getTransactionType() == TransactionType.INPUT){
            accountService.deposit(transaction.getValue(), transaction.getAccountId());
        }else{
            accountService.withdraw(transaction.getValue(), transaction.getAccountId());
-
        }
 
        accountRepository.save(account);
        transaction.setValue(transactionRequest.getValue());
 
        return transactionRepository.save(transaction);
+    }
+
+    private boolean validateTypeTransaction(final String typeTransaction){
+        for (TransactionType tp: TransactionType.values()) {
+            if(tp.name().equals(typeTransaction)){
+                return true;
+            }
+        }
+        return false;
     }
 }

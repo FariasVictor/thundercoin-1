@@ -3,6 +3,7 @@ package com.invillia.thundercoin.controller.advice;
 import com.invillia.thundercoin.exception.CPFNotValidException;
 import com.invillia.thundercoin.exception.ObjectNotFoundException;
 import com.invillia.thundercoin.exception.OriginTypeNotFoundException;
+import com.invillia.thundercoin.exception.UserAlreadyRegistred;
 import com.invillia.thundercoin.exception.ValueNotAllowed;
 import org.springframework.context.support.DefaultMessageSourceResolvable;
 import org.springframework.http.HttpEntity;
@@ -27,21 +28,22 @@ public class ControllerAdviceExceptionHandler {
     @ExceptionHandler(ObjectNotFoundException.class)
     public HttpEntity<StandardError> objectNotFoundException(final ObjectNotFoundException e,
                                                              final HttpServletRequest request){
-        HttpStatus status = HttpStatus.NOT_FOUND;
 
+        HttpStatus status = HttpStatus.NOT_FOUND;
         StandardError error = new StandardError(
                 formatter.format(System.currentTimeMillis()),
                 status.value(),
                 "Não Encontrado!",
                 e.getMessage(),
-                request.getRequestURI()
-        );
+                request.getRequestURI());
         return ResponseEntity.status(status).body(error);
+
     }
 
     @ExceptionHandler(CPFNotValidException.class)
     public HttpEntity<StandardError> cpfNotValidException(final CPFNotValidException e,
                                                           final HttpServletRequest request){
+
         StandardError error = new StandardError(
                 formatter.format(System.currentTimeMillis()),
                 e.getStatus().value(),
@@ -64,6 +66,22 @@ public class ControllerAdviceExceptionHandler {
                 e.getMessage(),
                 request.getRequestURI()
         );
+
+        return ResponseEntity.status(status).body(error);
+    }
+
+    @ExceptionHandler(UserAlreadyRegistred.class)
+    public HttpEntity<StandardError> userAlreadyRegistred(final UserAlreadyRegistred e, final HttpServletRequest request){
+        HttpStatus status = HttpStatus.CONFLICT;
+
+        StandardError error = new StandardError(
+                formatter.format(System.currentTimeMillis()),
+                status.value(),
+                "Usuário já possui uma conta!",
+                e.getMessage(),
+                request.getRequestURI()
+        );
+
         return ResponseEntity.status(status).body(error);
     }
 
@@ -78,6 +96,7 @@ public class ControllerAdviceExceptionHandler {
                 e.getMessage(),
                 request.getRequestURI()
         );
+
         return ResponseEntity.status(status).body(error);
     }
 
@@ -95,6 +114,7 @@ public class ControllerAdviceExceptionHandler {
                                 )
                         )
                 );
+
         return ResponseEntity.badRequest().body(result);
     }
 }

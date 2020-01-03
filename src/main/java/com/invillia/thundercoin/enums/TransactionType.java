@@ -1,6 +1,6 @@
 package com.invillia.thundercoin.enums;
 
-public enum OriginType {
+public enum TransactionType {
 
     OUTPUT, /* Withdraw */
     INPUT /* Deposit */

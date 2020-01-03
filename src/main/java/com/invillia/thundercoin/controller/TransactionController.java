@@ -27,17 +27,17 @@ public class TransactionController {
     }
 
     @GetMapping
-    private List<TransactionResponse> findAll(){
+    public List<TransactionResponse> findAll(){
         return transactionService.findAll();
     }
 
     @GetMapping("/{id}")
-    private TransactionResponse findById(@PathVariable final Long id){
+    public TransactionResponse findById(@PathVariable final Long id){
         return transactionService.findById(id);
     }
 
     @PostMapping
-    private HttpEntity<?> save(@RequestBody final TransactionRequest transactionRequest){
+    public HttpEntity<?> save(@RequestBody final TransactionRequest transactionRequest){
 
         final Long idTransaction  = transactionService.save(transactionRequest).getId();
 
@@ -47,4 +47,6 @@ public class TransactionController {
 
         return ResponseEntity.created(location).build();
     }
+
+
 }

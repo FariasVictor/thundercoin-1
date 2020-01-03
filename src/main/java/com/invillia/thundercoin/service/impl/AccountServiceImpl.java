@@ -2,9 +2,9 @@ package com.invillia.thundercoin.service.impl;
 
 import com.invillia.thundercoin.domain.Account;
 import com.invillia.thundercoin.domain.request.AccountRequest;
-import com.invillia.thundercoin.domain.request.QuotationRequest;
 import com.invillia.thundercoin.domain.response.AccountResponse;
 import com.invillia.thundercoin.exception.ObjectNotFoundException;
+import com.invillia.thundercoin.exception.UserAlreadyRegistred;
 import com.invillia.thundercoin.exception.ValueNotAllowed;
 import com.invillia.thundercoin.mapper.AccountMapper;
 import com.invillia.thundercoin.repository.AccountRepository;
@@ -31,10 +31,12 @@ public class AccountServiceImpl implements AccountService {
         this.userRepository = userRepository;
     }
 
-
-    @Override
     @Transactional
     public Account create(final AccountRequest accountRequest) {
+
+        if(accountRepository.existsAccountByUserId(accountRequest.getUserId())){
+            throw new UserAlreadyRegistred("Já existe uma conta para esse usuário!");
+        }
         Account account = accountMapper.accountRequestToAccount(accountRequest);
 
         account.setUser(userRepository.findById(accountRequest.getUserId())
@@ -45,7 +47,6 @@ public class AccountServiceImpl implements AccountService {
         return accountRepository.save(account);
     }
 
-    @Override
     @Transactional(readOnly = true)
     public List<AccountResponse> findAll() {
         final List<Account> accounts = accountRepository.findAll();
@@ -61,7 +62,6 @@ public class AccountServiceImpl implements AccountService {
                 .orElseThrow(() -> new ObjectNotFoundException("Conta não encontrada!"));
     }
 
-    @Override
     @Transactional
     public void delete(final Long id) {
         Account account = accountRepository.findById(id)
@@ -69,7 +69,6 @@ public class AccountServiceImpl implements AccountService {
         accountRepository.delete(account);
     }
 
-    @Override
     @Transactional
     public void withdraw(final Double value, final Account account) {
         if(value > 0){
@@ -85,7 +84,6 @@ public class AccountServiceImpl implements AccountService {
         accountRepository.save(account);
     }
 
-    @Override
     @Transactional
     public void deposit(final Double value, final Account account) {
         if(value > 0){
@@ -96,4 +94,5 @@ public class AccountServiceImpl implements AccountService {
 
         accountRepository.save(account);
     }
+
 }

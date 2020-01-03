@@ -1,7 +1,8 @@
 package com.invillia.thundercoin.mapper;
 
 import com.invillia.thundercoin.domain.User;
-import com.invillia.thundercoin.domain.request.userRequest.UserSaveRequest;
+import com.invillia.thundercoin.domain.request.UserSaveRequest;
+import com.invillia.thundercoin.domain.request.UserUpdateRequest;
 import com.invillia.thundercoin.domain.response.UserResponse;
 import org.springframework.stereotype.Component;
 
@@ -35,5 +36,9 @@ public class UserMapper {
         user.setCpf(userSaveRequest.getCpf());
 
         return user;
+    }
+
+    public void updateUserToUserRequest(final User user, final UserUpdateRequest userUpdateRequest){
+        user.setName(userUpdateRequest.getName());
     }
 }

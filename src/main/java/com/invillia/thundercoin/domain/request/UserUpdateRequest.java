@@ -1,4 +1,4 @@
-package com.invillia.thundercoin.domain.request.userRequest;
+package com.invillia.thundercoin.domain.request;
 
 import lombok.Data;
 
@@ -12,7 +12,7 @@ public class UserUpdateRequest {
     private String name;
 
     @NotBlank
-    private BigDecimal balance;
+    private Double balance;
 
     @NotBlank
     private String status;

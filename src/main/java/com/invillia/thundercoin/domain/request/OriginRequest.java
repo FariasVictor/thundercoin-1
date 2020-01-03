@@ -19,8 +19,4 @@ public class OriginRequest {
     @NotNull(message = "O campo não pode ser nulo")
     private boolean active;
 
-    @NotNull(message = "O campo não pode ser nulo")
-    @NotBlank(message = "O campo não pode estar em branco")
-    private String originType;
-
 }

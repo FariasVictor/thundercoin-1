@@ -17,8 +17,6 @@ public class OriginResponse {
 
     private boolean active;
 
-    private String originType;
-
     private String createdAt;
 
     private String updatedAt;
