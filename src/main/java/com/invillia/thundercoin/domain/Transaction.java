@@ -7,22 +7,14 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 import org.hibernate.annotations.CreationTimestamp;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.EnumType;
-import javax.persistence.Enumerated;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
+import javax.persistence.*;
 import java.time.LocalDateTime;
 
 @Data
 @Entity
-@Builder
 @NoArgsConstructor
 @AllArgsConstructor
+@Table(name = "transactions")
 public class Transaction {
 
     @Id
@@ -30,16 +22,16 @@ public class Transaction {
     private Long id;
 
     @ManyToOne
-    @JoinColumn(name = "quotation",nullable =  false)
-    private Quotation quotationId;
+    @JoinColumn(name = "quotation_id", nullable =  false)
+    private Quotation quotation;
 
     @ManyToOne
-    @JoinColumn(name = "account",nullable = false)
-    private Account accountId;
+    @JoinColumn(name = "account_id", nullable = false)
+    private Account account;
 
     @ManyToOne
-    @JoinColumn(name = "origin",nullable = false)
-    private Origin originId;
+    @JoinColumn(name = "origin_id", nullable = false)
+    private Origin origin;
 
     @Enumerated(EnumType.STRING)
     private TransactionType transactionType;

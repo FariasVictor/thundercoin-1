@@ -16,8 +16,10 @@ public class QuotationMapper {
 
     public QuotationResponse quotationToQuotationResponse(final Quotation quotation){
         return QuotationResponse.builder()
-                .active(true)
-                .value(100.0)
+                .id(quotation.getId())
+                .value(quotation.getValue())
+                .createdAt(quotation.getCreatedAt().format(formatter))
+                .status(quotation.getStatus().toString())
                 .build();
     }
 
@@ -32,14 +34,11 @@ public class QuotationMapper {
         Quotation quotation = new Quotation();
 
         quotation.setValue(quotationRequest.getValue());
-        quotation.setActive(quotationRequest.getActive());
 
         return quotation;
     }
 
     public void updateQuotationByQuotationRequest(final Quotation quotation, final QuotationRequest quotationRequest) {
-
-        quotation.setActive(quotationRequest.getActive());
         quotation.setValue(quotationRequest.getValue());
     }
 }

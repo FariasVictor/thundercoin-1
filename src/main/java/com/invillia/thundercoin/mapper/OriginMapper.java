@@ -18,14 +18,14 @@ public class OriginMapper {
 
    public OriginResponse originToOriginResponse(final Origin origin) {
 
-      return OriginResponse.builder()
-              .id(origin.getId())
-              .name(origin.getName())
-              .active(origin.isActive())
-              .createdAt(origin.getCreatedAt().format(formatter))
-              .updatedAt(origin.getUpdatedAt().format(formatter))
-              .build();
+      OriginResponse originResponse = new OriginResponse();
 
+      originResponse.setId(origin.getId());
+      originResponse.setName(origin.getName());
+      originResponse.setCreatedAt(origin.getCreatedAt().format(formatter));
+      originResponse.setUpdatedAt(origin.getUpdatedAt().format(formatter));
+
+      return originResponse;
    }
 
    public List<OriginResponse> originToOriginResponse(final List<Origin> origins) {
@@ -45,10 +45,7 @@ public class OriginMapper {
    }
 
    public void updateOriginByAccountRequest(final Origin origin, final OriginRequest originRequest) {
-
       origin.setName(originRequest.getName());
-      origin.setActive(originRequest.isActive());
-
    }
 
 }

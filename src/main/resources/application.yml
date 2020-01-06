@@ -1,14 +1,12 @@
 spring:
   datasource:
-    url: jdbc:postgresql://localhost:5432/thundercoin
-    username: incubadora
-    password: 123123
+    url: jdbc:postgresql://localhost:5432/thundercoin_incubadora
+    username: postgres
+    password: root
   jpa:
     show-sql: true
-    open-in-view: false
-    database-platform: org.hibernate.dialect.PostgreSQL10Dialect
     properties:
       hibernate:
         format_sql: true
     hibernate:
-      ddl-auto: update
+      ddl-auto: create-drop

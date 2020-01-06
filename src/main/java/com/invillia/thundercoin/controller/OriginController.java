@@ -25,7 +25,7 @@ import java.util.List;
 @RequestMapping("/origin")
 public class OriginController {
 
-    private final OriginService originService;
+    private final OriginServiceImpl originService;
 
     @Autowired
     public OriginController(OriginServiceImpl originService) {
@@ -54,16 +54,16 @@ public class OriginController {
         return originService.findById(id);
     }
 
-    @DeleteMapping("/{id}")
-    public HttpEntity<?> delete(@PathVariable final Long id) {
-        originService.delete(id);
+    @PutMapping("/{id}")
+    public HttpEntity<?> update(@PathVariable final Long id, @Valid @RequestBody final OriginRequest originRequest) {
+        originService.update(id, originRequest);
 
         return ResponseEntity.noContent().build();
     }
 
-    @PutMapping("/{id}")
-    public HttpEntity<?> updete(@PathVariable final Long id, @Valid @RequestBody final OriginRequest originRequest) {
-        originService.update(id, originRequest);
+    @DeleteMapping("/{id}")
+    public HttpEntity<?> delete(@PathVariable final Long id) {
+        originService.delete(id);
 
         return ResponseEntity.noContent().build();
     }

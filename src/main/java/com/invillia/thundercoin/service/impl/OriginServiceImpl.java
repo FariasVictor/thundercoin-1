@@ -4,6 +4,7 @@ import com.invillia.thundercoin.domain.Origin;
 import com.invillia.thundercoin.domain.request.OriginRequest;
 import com.invillia.thundercoin.domain.response.OriginResponse;
 
+import com.invillia.thundercoin.enums.StatusEnum;
 import com.invillia.thundercoin.exception.OriginTypeNotFoundException;
 import com.invillia.thundercoin.mapper.OriginMapper;
 import com.invillia.thundercoin.repository.OriginRepository;
@@ -18,23 +19,13 @@ import java.util.List;
 
 @Service
 public class OriginServiceImpl implements OriginService {
-
     final private OriginRepository originRepository;
 
     final private OriginMapper originMapper;
 
-
-    @Autowired
     public OriginServiceImpl(OriginRepository originRepository, OriginMapper originMapper) {
         this.originRepository = originRepository;
         this.originMapper = originMapper;
-    }
-
-    public Long create(final OriginRequest originRequest) {
-        Origin origin = originMapper.originRequestToOrigin(originRequest);
-        originRepository.save(origin);
-
-        return origin.getId();
     }
 
     @Transactional(readOnly = true)
@@ -53,13 +44,11 @@ public class OriginServiceImpl implements OriginService {
         return originMapper.originToOriginResponse(origin);
     }
 
-    @Transactional
-    public void delete(final Long id) {
-        final Origin origin = originRepository.findById(id).orElseThrow(() -> new OriginTypeNotFoundException(
-                "Id: " + id + " não encontrado!"
-        ));
+    public Long create(final OriginRequest originRequest) {
+        Origin origin = originMapper.originRequestToOrigin(originRequest);
+        originRepository.save(origin);
 
-        originRepository.deleteById(id);
+        return origin.getId();
     }
 
     @Transactional
@@ -69,6 +58,17 @@ public class OriginServiceImpl implements OriginService {
         ));
 
         originMapper.updateOriginByAccountRequest(origin, originRequest);
+
+        originRepository.save(origin);
+    }
+
+    @Transactional
+    public void delete(final Long id) {
+        final Origin origin = originRepository.findById(id).orElseThrow(() -> new OriginTypeNotFoundException(
+                "Id: " + id + " não encontrado!"
+        ));
+
+        origin.setStatus(StatusEnum.DISABLED);
 
         originRepository.save(origin);
     }

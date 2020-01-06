@@ -1,21 +1,13 @@
 package com.invillia.thundercoin.domain;
 
+import com.invillia.thundercoin.enums.StatusEnum;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
 
-import javax.persistence.CascadeType;
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.OneToMany;
-import javax.persistence.OneToOne;
-import javax.persistence.Table;
+import javax.persistence.*;
 import java.time.LocalDateTime;
 import java.util.List;
 
@@ -30,15 +22,11 @@ public class Account {
     private Long id;
 
     @OneToOne
-    @JoinColumn(name = "user_id",nullable = false)
+    @JoinColumn(name = "user_id", nullable = false)
     private User user;
 
     @Column(nullable = false)
     private Double balance = 0.0;
-
-    @OneToMany(cascade = CascadeType.REMOVE)
-    @Column(nullable = false)
-    private List<Transaction> transaction;
 
     @CreationTimestamp
     @Column(name = "created_at", nullable = false)
@@ -48,5 +36,10 @@ public class Account {
     @Column(name = "update_at", nullable = false)
     private LocalDateTime updatedAt;
 
+    @OneToMany(mappedBy = "account", cascade = CascadeType.ALL)
+    private List<Transaction> transactions;
+
+    @Enumerated(value = EnumType.STRING)
+    private StatusEnum status = StatusEnum.ACTIVE;
 }
 

@@ -7,8 +7,7 @@ import java.util.List;
 
 
 public interface QuotationService {
-     Long save(QuotationRequest quotationRequest);
      List<QuotationResponse> findAll();
      QuotationResponse findById(Long id);
-     void update(QuotationRequest quotationRequest, Long id);
+     Long save(QuotationRequest quotationRequest);
 }

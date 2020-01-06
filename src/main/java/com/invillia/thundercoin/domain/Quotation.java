@@ -1,27 +1,24 @@
 package com.invillia.thundercoin.domain;
 
+import com.invillia.thundercoin.enums.StatusEnum;
 import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import org.hibernate.annotations.CreationTimestamp;
 
-import javax.persistence.CascadeType;
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.OneToMany;
+import javax.persistence.*;
 import java.time.LocalDateTime;
 import java.util.List;
 
 
 @Data
 @Entity
+@Builder
 @NoArgsConstructor
 @AllArgsConstructor
+@Table(name = "quotations")
 public class Quotation {
-
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(nullable = false)
@@ -30,15 +27,13 @@ public class Quotation {
     @Column(nullable = false)
     private Double value;
 
-    @Column(nullable = false)
-    private Boolean active;
-
-    @OneToMany(cascade = CascadeType.REMOVE)
-    @Column(nullable = false)
-    private List<Transaction> transaction;
-
     @CreationTimestamp
     @Column(nullable = false)
     private LocalDateTime createdAt;
 
+    @OneToMany(mappedBy = "quotation", cascade = CascadeType.ALL)
+    private List<Transaction> transactions;
+
+    @Enumerated(value = EnumType.STRING)
+    private StatusEnum status = StatusEnum.ACTIVE;
 }

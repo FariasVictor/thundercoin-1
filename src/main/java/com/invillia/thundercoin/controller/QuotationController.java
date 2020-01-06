@@ -52,12 +52,12 @@ public class QuotationController {
     }
 
 
-    @PutMapping("/{id}")
-    public HttpEntity<?> update(@PathVariable final Long id,
-                                @RequestBody @Valid final QuotationRequest quotationRequest){
-        quotationServiceImpl.update(quotationRequest, id);
-
-        return ResponseEntity.noContent().build();
-    }
+//    @PutMapping("/{id}")
+//    public HttpEntity<?> update(@PathVariable final Long id,
+//                                @RequestBody @Valid final QuotationRequest quotationRequest){
+//        quotationServiceImpl.update(quotationRequest, id);
+//
+//        return ResponseEntity.noContent().build();
+//    }
 
 }

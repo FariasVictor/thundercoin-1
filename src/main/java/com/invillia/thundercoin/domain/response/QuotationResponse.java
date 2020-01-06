@@ -19,7 +19,7 @@ public class QuotationResponse {
 
     private Double value;
 
-    private LocalDateTime createdAt;
+    private String createdAt;
 
-    private boolean active;
+    private String status;
 }

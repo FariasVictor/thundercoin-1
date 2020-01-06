@@ -77,15 +77,15 @@ public class TransactionServiceImp implements TransactionService {
 
        final Transaction transaction = transactionMapper.transactionRequestToTransaction(transactionRequest);
 
-       transaction.setOriginId(origin);
-       transaction.setQuotationId(quotation);
-       transaction.setAccountId(account);
+       transaction.setOrigin(origin);
+       transaction.setQuotation(quotation);
+       transaction.setAccount(account);
        transaction.setTransactionType(TransactionType.valueOf(transactionRequest.getTransactionType()));
 
        if(transaction.getTransactionType() == TransactionType.INPUT){
-           accountService.deposit(transaction.getValue(), transaction.getAccountId());
+           accountService.deposit(transaction.getValue(), transaction.getAccount());
        }else{
-           accountService.withdraw(transaction.getValue(), transaction.getAccountId());
+           accountService.withdraw(transaction.getValue(), transaction.getAccount());
        }
 
        accountRepository.save(account);

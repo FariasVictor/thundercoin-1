@@ -1,27 +1,21 @@
 package com.invillia.thundercoin.domain;
 
+import com.invillia.thundercoin.enums.StatusEnum;
 import lombok.AllArgsConstructor;
-import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
 
-import javax.persistence.CascadeType;
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.OneToMany;
+import javax.persistence.*;
 import java.time.LocalDateTime;
 import java.util.List;
 
 @Data
 @Entity
-@Builder
 @NoArgsConstructor
 @AllArgsConstructor
+@Table(name = "origins")
 public class Origin {
 
     @Id
@@ -31,10 +25,6 @@ public class Origin {
     @Column(nullable = false)
     private String name;
 
-    @OneToMany(cascade = CascadeType.REMOVE)
-    @Column(nullable = false)
-    private List<Transaction> transaction;
-
     @CreationTimestamp
     @Column(name = "created_at", nullable = false)
     private LocalDateTime createdAt;
@@ -43,8 +33,10 @@ public class Origin {
     @Column(name = "updated_at", nullable = false)
     private LocalDateTime updatedAt;
 
-    @Column
-    @Builder.Default
-    private boolean active = true;
+    @OneToMany(mappedBy = "origin", cascade = CascadeType.ALL)
+    private List<Transaction> transactions;
 
+    @Column(nullable = false)
+    @Enumerated(value = EnumType.STRING)
+    private StatusEnum status = StatusEnum.ACTIVE;
 }

@@ -17,9 +17,9 @@ public class TransactionMapper {
 
     public TransactionResponse transactionToTransactionResponse(final Transaction transaction){
         return TransactionResponse.builder()
-                .origin(String.valueOf(transaction.getOriginId()))
-                .quotation(String.valueOf(transaction.getQuotationId()))
-                .account(String.valueOf(transaction.getAccountId()))
+                .origin(String.valueOf(transaction.getOrigin()))
+                .quotation(String.valueOf(transaction.getQuotation()))
+                .account(String.valueOf(transaction.getAccount()))
                 .value(transaction.getValue())
                 .build();
     }

@@ -15,7 +15,4 @@ public class QuotationRequest {
     @NotNull(message = "Valor não pode ser nulo")
     @PositiveOrZero(message = "Valor deve ser maior ou igual a 0")
     private Double value;
-
-    private Boolean active=true;
-
 }
