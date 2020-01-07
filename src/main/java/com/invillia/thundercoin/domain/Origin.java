@@ -22,8 +22,15 @@ public class Origin {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
 
-    @Column(nullable = false)
+    @Column(nullable = false, unique = true)
     private String name;
+
+    @Column(nullable = false)
+    @Enumerated(value = EnumType.STRING)
+    private StatusEnum status = StatusEnum.ACTIVE;
+
+    @OneToMany(mappedBy = "origin", cascade = CascadeType.ALL)
+    private List<Transaction> transactions;
 
     @CreationTimestamp
     @Column(name = "created_at", nullable = false)
@@ -32,11 +39,4 @@ public class Origin {
     @UpdateTimestamp
     @Column(name = "updated_at", nullable = false)
     private LocalDateTime updatedAt;
-
-    @OneToMany(mappedBy = "origin", cascade = CascadeType.ALL)
-    private List<Transaction> transactions;
-
-    @Column(nullable = false)
-    @Enumerated(value = EnumType.STRING)
-    private StatusEnum status = StatusEnum.ACTIVE;
 }

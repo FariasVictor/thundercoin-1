@@ -3,7 +3,7 @@ package com.invillia.thundercoin.controller;
 import com.invillia.thundercoin.domain.request.UserSaveRequest;
 import com.invillia.thundercoin.domain.request.UserUpdateRequest;
 import com.invillia.thundercoin.domain.response.UserResponse;
-import com.invillia.thundercoin.service.impl.UserServiceImp;
+import com.invillia.thundercoin.service.impl.UserServiceImpl;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -24,9 +24,9 @@ import java.util.List;
 @RequestMapping("/users")
 public class UserController {
 
-    private final UserServiceImp userService;
+    private final UserServiceImpl userService;
 
-    public UserController(final UserServiceImp userService) {
+    public UserController(final UserServiceImpl userService) {
         this.userService = userService;
     }
 
@@ -42,7 +42,7 @@ public class UserController {
 
     @PostMapping
     public HttpEntity<?> save(@RequestBody final UserSaveRequest userSaveRequest){
-        Long idUser = userService.save(userSaveRequest);
+        Long idUser = userService.create(userSaveRequest);
 
         URI location = ServletUriComponentsBuilder.fromCurrentContextPath()
                             .path("/users/{id}")

@@ -10,15 +10,10 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @AllArgsConstructor
 public class TransactionResponse {
-
     private Double value;
-
-    private String account;
-
+    private String userAccount;
     private String origin;
-
-    private String quotation;
-
+    private Double valueQuotation;
     private String transactionType;
-
+    private String dateTransaction;
 }

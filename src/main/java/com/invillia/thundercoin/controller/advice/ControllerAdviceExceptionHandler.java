@@ -1,10 +1,6 @@
 package com.invillia.thundercoin.controller.advice;
 
-import com.invillia.thundercoin.exception.CPFNotValidException;
-import com.invillia.thundercoin.exception.ObjectNotFoundException;
-import com.invillia.thundercoin.exception.OriginTypeNotFoundException;
-import com.invillia.thundercoin.exception.UserAlreadyRegistred;
-import com.invillia.thundercoin.exception.ValueNotAllowed;
+import com.invillia.thundercoin.exception.*;
 import org.springframework.context.support.DefaultMessageSourceResolvable;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpStatus;
@@ -70,14 +66,14 @@ public class ControllerAdviceExceptionHandler {
         return ResponseEntity.status(status).body(error);
     }
 
-    @ExceptionHandler(UserAlreadyRegistred.class)
-    public HttpEntity<StandardError> userAlreadyRegistred(final UserAlreadyRegistred e, final HttpServletRequest request){
+    @ExceptionHandler(DataAlreadyRegistred.class)
+    public HttpEntity<StandardError> dataAlreadyRegistredException(final DataAlreadyRegistred e, final HttpServletRequest request){
         HttpStatus status = HttpStatus.CONFLICT;
 
         StandardError error = new StandardError(
                 formatter.format(System.currentTimeMillis()),
                 status.value(),
-                "Usuário já possui uma conta!",
+                "Dado já cadastrado!",
                 e.getMessage(),
                 request.getRequestURI()
         );
@@ -93,6 +89,21 @@ public class ControllerAdviceExceptionHandler {
                 formatter.format(System.currentTimeMillis()),
                 status.value(),
                 "Valor inválido",
+                e.getMessage(),
+                request.getRequestURI()
+        );
+
+        return ResponseEntity.status(status).body(error);
+    }
+
+    @ExceptionHandler(DataDisableException.class)
+    public HttpEntity<StandardError> dataDisableException(final DataDisableException e, final HttpServletRequest request){
+        HttpStatus status = HttpStatus.BAD_REQUEST;
+
+        StandardError error = new StandardError(
+                formatter.format(System.currentTimeMillis()),
+                status.value(),
+                "Desativado",
                 e.getMessage(),
                 request.getRequestURI()
         );

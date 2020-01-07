@@ -5,12 +5,7 @@ import com.invillia.thundercoin.domain.response.TransactionResponse;
 import com.invillia.thundercoin.service.TransactionService;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 import java.net.URI;
@@ -39,7 +34,7 @@ public class TransactionController {
     @PostMapping
     public HttpEntity<?> save(@RequestBody final TransactionRequest transactionRequest){
 
-        final Long idTransaction  = transactionService.save(transactionRequest).getId();
+        final Long idTransaction  = transactionService.create(transactionRequest).getId();
 
         URI location = ServletUriComponentsBuilder.fromCurrentContextPath()
                 .path("/transactions/{id}")

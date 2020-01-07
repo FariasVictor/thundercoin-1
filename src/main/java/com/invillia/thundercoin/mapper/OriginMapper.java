@@ -17,35 +17,28 @@ public class OriginMapper {
    private final DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy HH:mm:ss");
 
    public OriginResponse originToOriginResponse(final Origin origin) {
-
-      OriginResponse originResponse = new OriginResponse();
-
-      originResponse.setId(origin.getId());
-      originResponse.setName(origin.getName());
-      originResponse.setCreatedAt(origin.getCreatedAt().format(formatter));
-      originResponse.setUpdatedAt(origin.getUpdatedAt().format(formatter));
-
-      return originResponse;
+      return OriginResponse.builder()
+                 .id(origin.getId())
+                 .name(origin.getName())
+                 .status(origin.getStatus().toString())
+                 .createdAt(origin.getCreatedAt().format(formatter))
+                 .updatedAt(origin.getUpdatedAt().format(formatter))
+              .build();
    }
 
    public List<OriginResponse> originToOriginResponse(final List<Origin> origins) {
-
-     return origins.stream()
-               .map(this::originToOriginResponse)
-               .collect(Collectors.toList());
-
+     return origins.stream().map(this::originToOriginResponse).collect(Collectors.toList());
    }
 
    public Origin originRequestToOrigin(final OriginRequest originRequest) {
-
       Origin origin = new Origin();
-      origin.setName(originRequest.getName());
-      return origin;
 
+      origin.setName(originRequest.getName());
+
+      return origin;
    }
 
    public void updateOriginByAccountRequest(final Origin origin, final OriginRequest originRequest) {
       origin.setName(originRequest.getName());
    }
-
 }

@@ -22,7 +22,7 @@ import java.net.URI;
 import java.util.List;
 
 @RestController
-@RequestMapping("/origin")
+@RequestMapping("/origins")
 public class OriginController {
 
     private final OriginServiceImpl originService;

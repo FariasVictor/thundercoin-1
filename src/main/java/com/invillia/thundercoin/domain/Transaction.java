@@ -12,11 +12,11 @@ import java.time.LocalDateTime;
 
 @Data
 @Entity
+@Builder
 @NoArgsConstructor
 @AllArgsConstructor
 @Table(name = "transactions")
 public class Transaction {
-
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
@@ -41,5 +41,5 @@ public class Transaction {
 
     @CreationTimestamp
     @Column(nullable = false)
-    private LocalDateTime createAt;
+    private LocalDateTime dateTransaction;
 }

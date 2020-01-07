@@ -19,14 +19,16 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 @Service
-public class UserServiceImp implements UserService {
+public class UserServiceImpl implements UserService {
 
     private final UserRepository userRepository;
     private final UserMapper userMapper;
+    private final AccountServiceImpl accountService;
 
-    public UserServiceImp(final UserRepository userRepository, final UserMapper userMapper) {
+    public UserServiceImpl(final UserRepository userRepository, final UserMapper userMapper, final AccountServiceImpl accountService) {
         this.userRepository = userRepository;
         this.userMapper = userMapper;
+        this.accountService = accountService;
     }
 
     @Transactional
@@ -44,7 +46,7 @@ public class UserServiceImp implements UserService {
     }
 
     @Transactional
-    public Long save(final UserSaveRequest userSaveRequest) {
+    public Long create(final UserSaveRequest userSaveRequest) {
         if (!validateCPF(userSaveRequest.getCpf()))
             throw new CPFNotValidException("CPF Inválido!", HttpStatus.BAD_REQUEST);
 
@@ -54,13 +56,27 @@ public class UserServiceImp implements UserService {
 
         User user = userMapper.userSaveRequestToUser(userSaveRequest);
 
-        return userRepository.save(user).getId();
+        userRepository.save(user);
+
+        accountService.create(user);
+
+        return user.getId();
     }
 
     @Transactional
     public void update( final Long id, final UserUpdateRequest userUpdateRequest) {
         User user = userRepository.findById(id)
                 .orElseThrow(() -> new ObjectNotFoundException("Usuário não encontrado"));
+
+        if(!user.getCpf().equals(userUpdateRequest.getCpf())){
+            if(!validateCPF(userUpdateRequest.getCpf())){
+                throw new CPFNotValidException("CPF Inválido!", HttpStatus.BAD_REQUEST);
+            }else{
+                if(userRepository.existsByCpf(userUpdateRequest.getCpf())){
+                    throw new CPFNotValidException("CPF já cadastrado!", HttpStatus.CONFLICT);
+                }
+            }
+        }
 
         userMapper.updateUserToUserRequest(user, userUpdateRequest);
 

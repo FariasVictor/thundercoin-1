@@ -6,27 +6,30 @@ import com.invillia.thundercoin.domain.request.UserUpdateRequest;
 import com.invillia.thundercoin.domain.response.UserResponse;
 import org.springframework.stereotype.Component;
 
+import java.time.format.DateTimeFormatter;
 import java.util.List;
 import java.util.stream.Collectors;
 
 @Component
 public class UserMapper {
 
+    private final DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy HH:mm:ss");
+
     public UserResponse userToUserResponse(final User user) {
-        UserResponse userResponse = new UserResponse();
-
-        userResponse.setId(user.getId());
-        userResponse.setName(user.getName());
-        userResponse.setCpf(user.getCpf());
-
-        return userResponse;
+        return UserResponse.builder()
+                    .id(user.getId())
+                    .name(user.getName())
+                    .cpf(user.getCpf())
+                    .status(user.getStatus().toString())
+                    .createdAt(user.getCreatedAt().format(formatter))
+                    .updatedAt(user.getUpdatedAt().format(formatter))
+                .build();
     }
 
     public List<UserResponse> userToUserResponse(final List<User> users) {
         return users.stream()
                 .map(this::userToUserResponse)
                 .collect(Collectors.toList());
-
     }
 
     public User userSaveRequestToUser(UserSaveRequest userSaveRequest){
@@ -40,5 +43,6 @@ public class UserMapper {
 
     public void updateUserToUserRequest(final User user, final UserUpdateRequest userUpdateRequest){
         user.setName(userUpdateRequest.getName());
+        user.setCpf(userUpdateRequest.getCpf());
     }
 }

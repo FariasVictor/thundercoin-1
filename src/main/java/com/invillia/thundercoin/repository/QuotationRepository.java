@@ -11,4 +11,7 @@ import java.util.List;
 @Repository
 public interface QuotationRepository extends JpaRepository<Quotation,Long> {
     Quotation findByStatus(final StatusEnum statusEnum);
+
+    @Query("select q from Quotation q order by q.createdAt desc")
+    List<Quotation> findAllOrderByCreatedAt();
 }

@@ -17,10 +17,12 @@ public class TransactionMapper {
 
     public TransactionResponse transactionToTransactionResponse(final Transaction transaction){
         return TransactionResponse.builder()
-                .origin(String.valueOf(transaction.getOrigin()))
-                .quotation(String.valueOf(transaction.getQuotation()))
-                .account(String.valueOf(transaction.getAccount()))
-                .value(transaction.getValue())
+                    .origin(transaction.getOrigin().getName())
+                    .valueQuotation(transaction.getQuotation().getValue())
+                    .userAccount(transaction.getAccount().getUser().getName())
+                    .value(transaction.getValue())
+                    .dateTransaction(transaction.getDateTransaction().format(formatter))
+                    .transactionType(transaction.getTransactionType().toString())
                 .build();
     }
 

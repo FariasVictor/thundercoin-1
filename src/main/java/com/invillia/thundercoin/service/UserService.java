@@ -11,7 +11,7 @@ public interface UserService {
 
     List<UserResponse> findAll();
     UserResponse findById(final Long id);
-    Long save(final UserSaveRequest userSaveRequest);
+    Long create(final UserSaveRequest userSaveRequest);
     void delete(final Long id);
     void update(final Long id, final UserUpdateRequest userUpdateRequest);
 }

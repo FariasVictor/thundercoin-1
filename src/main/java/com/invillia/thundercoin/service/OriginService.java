@@ -6,11 +6,9 @@ import com.invillia.thundercoin.domain.response.OriginResponse;
 import java.util.List;
 
 public interface OriginService {
-
-     Long create(OriginRequest originRequest);
      List<OriginResponse> findAll();
      OriginResponse findById(Long id);
-     void delete(Long id);
+     Long create(OriginRequest originRequest);
      void update(Long id, OriginRequest originRequest);
-
+     void delete(Long id);
 }

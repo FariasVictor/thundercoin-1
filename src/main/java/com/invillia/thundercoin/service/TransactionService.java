@@ -10,5 +10,5 @@ import java.util.List;
 public interface TransactionService {
     List<TransactionResponse> findAll();
     TransactionResponse findById(final Long id);
-    Transaction save(TransactionRequest transactionRequest);
+    Transaction create(TransactionRequest transactionRequest);
 }

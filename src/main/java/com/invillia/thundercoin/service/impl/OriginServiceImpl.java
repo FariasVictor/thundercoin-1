@@ -5,6 +5,8 @@ import com.invillia.thundercoin.domain.request.OriginRequest;
 import com.invillia.thundercoin.domain.response.OriginResponse;
 
 import com.invillia.thundercoin.enums.StatusEnum;
+import com.invillia.thundercoin.exception.DataAlreadyRegistred;
+import com.invillia.thundercoin.exception.ObjectNotFoundException;
 import com.invillia.thundercoin.exception.OriginTypeNotFoundException;
 import com.invillia.thundercoin.mapper.OriginMapper;
 import com.invillia.thundercoin.repository.OriginRepository;
@@ -37,14 +39,17 @@ public class OriginServiceImpl implements OriginService {
 
     @Transactional(readOnly = true)
     public OriginResponse findById(final Long id) {
-        final Origin origin = originRepository.findById(id).orElseThrow(() -> new OriginTypeNotFoundException(
-                "Id: " + id + " não encontrado!"
+        final Origin origin = originRepository.findById(id).orElseThrow(() -> new ObjectNotFoundException(
+                "Origem não encontrada!"
         ));
 
         return originMapper.originToOriginResponse(origin);
     }
 
     public Long create(final OriginRequest originRequest) {
+        if(originRepository.existsByName(originRequest.getName()))
+            throw new DataAlreadyRegistred("Origem já cadastrada!");
+
         Origin origin = originMapper.originRequestToOrigin(originRequest);
         originRepository.save(origin);
 
@@ -53,9 +58,14 @@ public class OriginServiceImpl implements OriginService {
 
     @Transactional
     public void update(final Long id, final OriginRequest originRequest) {
-        final Origin origin = originRepository.findById(id).orElseThrow(() -> new OriginTypeNotFoundException(
-                "Id: " + id + " não encontrado!"
+        final Origin origin = originRepository.findById(id).orElseThrow(() -> new ObjectNotFoundException(
+                "Origem não encontrada!"
         ));
+
+        if(!origin.getName().equals(originRequest.getName())){
+            if(originRepository.existsByName(originRequest.getName()))
+                throw new DataAlreadyRegistred("Origem já cadastrada!");
+        }
 
         originMapper.updateOriginByAccountRequest(origin, originRequest);
 
@@ -64,8 +74,8 @@ public class OriginServiceImpl implements OriginService {
 
     @Transactional
     public void delete(final Long id) {
-        final Origin origin = originRepository.findById(id).orElseThrow(() -> new OriginTypeNotFoundException(
-                "Id: " + id + " não encontrado!"
+        final Origin origin = originRepository.findById(id).orElseThrow(() -> new ObjectNotFoundException(
+                "Origem não encontrada!"
         ));
 
         origin.setStatus(StatusEnum.DISABLED);

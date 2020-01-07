@@ -27,14 +27,14 @@ public class QuotationServiceImpl implements QuotationService {
         this.quotationMapper = quotationMapper;
     }
 
-    @Transactional
+    @Transactional(readOnly = true)
     public List<QuotationResponse> findAll() {
-        final List<Quotation> quotations = quotationRepository.findAll();
+        final List<Quotation> quotations = quotationRepository.findAllOrderByCreatedAt();
 
         return quotationMapper.quotationToQuotationResponse(quotations);
     }
 
-    @Transactional
+    @Transactional(readOnly = true)
     public QuotationResponse findById(Long id) {
         final Quotation quotation = quotationRepository.findById(id)
                 .orElseThrow(() -> new ObjectNotFoundException(
@@ -44,7 +44,11 @@ public class QuotationServiceImpl implements QuotationService {
     }
 
     @Transactional
-    public Long save(QuotationRequest quotationRequest) {
+    public Long create(QuotationRequest quotationRequest) {
+        if(quotationRequest.getValue() <= 0.0){
+            throw new ValueNotAllowed("O valor da Cotação deve ser positivo!");
+        }
+
         Quotation quotationActive = quotationRepository.findByStatus(StatusEnum.ACTIVE);
 
         if(quotationActive != null){
@@ -54,10 +58,6 @@ public class QuotationServiceImpl implements QuotationService {
         }
 
         Quotation quotation = quotationMapper.quotationRequestToQuotation(quotationRequest);
-
-        if(quotation.getValue()< 0){
-            throw new ValueNotAllowed("Cotação deve ser positiva");
-        }
 
         return quotationRepository.save(quotation).getId();
     }

@@ -6,7 +6,9 @@ import com.invillia.thundercoin.domain.Quotation;
 import com.invillia.thundercoin.domain.Transaction;
 import com.invillia.thundercoin.domain.request.TransactionRequest;
 import com.invillia.thundercoin.domain.response.TransactionResponse;
+import com.invillia.thundercoin.enums.StatusEnum;
 import com.invillia.thundercoin.enums.TransactionType;
+import com.invillia.thundercoin.exception.DataDisableException;
 import com.invillia.thundercoin.exception.ObjectNotFoundException;
 import com.invillia.thundercoin.mapper.TransactionMapper;
 import com.invillia.thundercoin.repository.AccountRepository;
@@ -21,7 +23,7 @@ import org.springframework.transaction.annotation.Transactional;
 import java.util.List;
 
 @Service
-public class TransactionServiceImp implements TransactionService {
+public class TransactionServiceImpl implements TransactionService {
 
     private final AccountServiceImpl accountService;
     private final TransactionRepository transactionRepository;
@@ -31,11 +33,11 @@ public class TransactionServiceImp implements TransactionService {
     private final AccountRepository accountRepository;
 
     @Autowired
-    public TransactionServiceImp(final AccountServiceImpl accountService, final TransactionRepository transactionRepository,
-                                 final TransactionMapper transactionMapper,
-                                 final QuotationRepository quotationRepository,
-                                 final OriginRepository originRepository,
-                                 final AccountRepository accountRepository) {
+    public TransactionServiceImpl(final AccountServiceImpl accountService, final TransactionRepository transactionRepository,
+                                  final TransactionMapper transactionMapper,
+                                  final QuotationRepository quotationRepository,
+                                  final OriginRepository originRepository,
+                                  final AccountRepository accountRepository) {
         this.accountService = accountService;
         this.transactionRepository = transactionRepository;
         this.transactionMapper = transactionMapper;
@@ -61,19 +63,27 @@ public class TransactionServiceImp implements TransactionService {
     }
 
     @Transactional
-    public Transaction save(TransactionRequest transactionRequest) {
+    public Transaction create(TransactionRequest transactionRequest) {
         final Quotation quotation = quotationRepository.findById(transactionRequest.getQuotationId())
                 .orElseThrow(() -> new ObjectNotFoundException("Quotação não encontrada!"));
 
+        if (quotation.getStatus() == StatusEnum.DISABLED)
+            throw new DataDisableException("Esta Quotação não esta ativa!");
+
         final Account account = accountRepository.findById(transactionRequest.getAccountId())
-                .orElseThrow(() -> new ObjectNotFoundException("Usuário não encontrada!"));
+                .orElseThrow(() -> new ObjectNotFoundException("Conta não encontrada!"));
+
+        if(account.getUser().getStatus() == StatusEnum.DISABLED)
+            throw new DataDisableException("Esta Conta não esta ativa!");
 
         final Origin origin = originRepository.findById(transactionRequest.getOriginId())
                 .orElseThrow(() -> new ObjectNotFoundException("Origem não encontrada!"));
 
-        if(!validateTypeTransaction(transactionRequest.getTransactionType())){
+        if(origin.getStatus() == StatusEnum.DISABLED)
+            throw new DataDisableException("Esta Origem não esta ativa!");
+
+        if(!validateTypeTransaction(transactionRequest.getTransactionType()))
             throw new ObjectNotFoundException("Tipo de conta inválida!");
-        }
 
        final Transaction transaction = transactionMapper.transactionRequestToTransaction(transactionRequest);
 

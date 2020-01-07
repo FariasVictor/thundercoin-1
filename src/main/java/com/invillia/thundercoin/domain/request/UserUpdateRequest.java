@@ -3,18 +3,12 @@ package com.invillia.thundercoin.domain.request;
 import lombok.Data;
 
 import javax.validation.constraints.NotBlank;
-import java.math.BigDecimal;
 
 @Data
 public class UserUpdateRequest {
-
-    @NotBlank
+    @NotBlank(message = "O campo Nome não pode estar em branco!")
     private String name;
 
-    @NotBlank
-    private Double balance;
-
-    @NotBlank
-    private String status;
-
+    @NotBlank(message = "O campo CPF não pode estar em branco!")
+    private String cpf;
 }

@@ -10,15 +10,9 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @AllArgsConstructor
 public class OriginResponse {
-
     private Long id;
-
     private String name;
-
-    private boolean active;
-
+    private String status;
     private String createdAt;
-
     private String updatedAt;
-
 }

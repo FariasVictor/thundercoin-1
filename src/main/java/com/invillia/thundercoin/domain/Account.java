@@ -1,9 +1,6 @@
 package com.invillia.thundercoin.domain;
 
-import com.invillia.thundercoin.enums.StatusEnum;
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
 
@@ -15,18 +12,22 @@ import java.util.List;
 @Entity
 @NoArgsConstructor
 @AllArgsConstructor
+@RequiredArgsConstructor
 @Table(name = "accounts")
 public class Account {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @OneToOne
-    @JoinColumn(name = "user_id", nullable = false)
-    private User user;
-
     @Column(nullable = false)
     private Double balance = 0.0;
+
+    @OneToOne
+    @JoinColumn(name = "user_id", nullable = false)
+    @NonNull private User user;
+
+    @OneToMany(mappedBy = "account", cascade = CascadeType.ALL)
+    private List<Transaction> transactions;
 
     @CreationTimestamp
     @Column(name = "created_at", nullable = false)
@@ -35,11 +36,5 @@ public class Account {
     @UpdateTimestamp
     @Column(name = "update_at", nullable = false)
     private LocalDateTime updatedAt;
-
-    @OneToMany(mappedBy = "account", cascade = CascadeType.ALL)
-    private List<Transaction> transactions;
-
-    @Enumerated(value = EnumType.STRING)
-    private StatusEnum status = StatusEnum.ACTIVE;
 }
 

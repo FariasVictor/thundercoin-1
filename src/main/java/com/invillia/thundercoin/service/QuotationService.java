@@ -9,5 +9,5 @@ import java.util.List;
 public interface QuotationService {
      List<QuotationResponse> findAll();
      QuotationResponse findById(Long id);
-     Long save(QuotationRequest quotationRequest);
+     Long create(QuotationRequest quotationRequest);
 }
