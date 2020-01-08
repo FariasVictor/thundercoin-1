@@ -14,12 +14,19 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.time.ZoneId;
+import java.time.format.DateTimeFormatter;
+import java.util.Date;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 public class QuotationServiceImpl implements QuotationService {
 
     private QuotationRepository quotationRepository;
+
     private QuotationMapper quotationMapper;
 
     public QuotationServiceImpl(QuotationRepository quotationRepository, QuotationMapper quotationMapper) {
@@ -61,4 +68,14 @@ public class QuotationServiceImpl implements QuotationService {
 
         return quotationRepository.save(quotation).getId();
     }
+
+    @Override
+    @Transactional(readOnly = true)
+    public List<QuotationResponse> findByDateInitialAndDateFinal(final LocalDate dateInitial, final LocalDate dateFinal) {
+        return quotationRepository.findByCreatedAtBetween(dateInitial.atStartOfDay(), dateFinal.atTime(23,59,59))
+                .stream()
+                .map(quotationMapper::quotationToQuotationResponse)
+                .collect(Collectors.toList());
+    }
+
 }

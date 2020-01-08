@@ -4,12 +4,14 @@ import com.invillia.thundercoin.domain.request.QuotationRequest;
 import com.invillia.thundercoin.domain.response.QuotationResponse;
 import com.invillia.thundercoin.service.impl.QuotationServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 import java.net.URI;
+import java.time.LocalDate;
 import java.util.List;
 
 @RestController
@@ -42,5 +44,13 @@ public class QuotationController {
                 .build(id);
 
         return ResponseEntity.created(location).build();
+    }
+
+    @GetMapping("/filter")
+    public List<QuotationResponse> filterByDate(
+            @RequestParam @DateTimeFormat(pattern = "yyyy-MM-dd") final LocalDate dateInitial,
+            @RequestParam @DateTimeFormat(pattern = "yyyy-MM-dd") final LocalDate dateFinal
+    ){
+        return quotationServiceImpl.findByDateInitialAndDateFinal(dateInitial, dateFinal);
     }
 }

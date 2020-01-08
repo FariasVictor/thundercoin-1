@@ -6,6 +6,7 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
 
+import java.time.LocalDateTime;
 import java.util.List;
 
 @Repository
@@ -14,4 +15,6 @@ public interface QuotationRepository extends JpaRepository<Quotation,Long> {
 
     @Query("select q from Quotation q order by q.createdAt desc")
     List<Quotation> findAllOrderByCreatedAt();
+
+    List<Quotation> findByCreatedAtBetween(final LocalDateTime dateInitial, final LocalDateTime dateFinal);
 }
