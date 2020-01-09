@@ -18,6 +18,7 @@ import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.ZoneId;
 import java.time.format.DateTimeFormatter;
+import java.util.Collections;
 import java.util.Date;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -36,7 +37,9 @@ public class QuotationServiceImpl implements QuotationService {
 
     @Transactional(readOnly = true)
     public List<QuotationResponse> findAll() {
-        final List<Quotation> quotations = quotationRepository.findAllOrderByCreatedAt();
+        final List<Quotation> quotations = quotationRepository.findTop5ByOrderByCreatedAtDesc();
+
+        Collections.reverse(quotations);
 
         return quotationMapper.quotationToQuotationResponse(quotations);
     }
@@ -72,7 +75,7 @@ public class QuotationServiceImpl implements QuotationService {
     @Override
     @Transactional(readOnly = true)
     public List<QuotationResponse> findByDateInitialAndDateFinal(final LocalDate dateInitial, final LocalDate dateFinal) {
-        return quotationRepository.findByCreatedAtBetween(dateInitial.atStartOfDay(), dateFinal.atTime(23,59,59))
+        return quotationRepository.findByCreatedAtBetweenOrderByIdAsc(dateInitial.atStartOfDay(), dateFinal.atTime(23,59,59))
                 .stream()
                 .map(quotationMapper::quotationToQuotationResponse)
                 .collect(Collectors.toList());
