@@ -10,6 +10,12 @@ import javax.validation.constraints.NotBlank;
 @NoArgsConstructor
 @AllArgsConstructor
 public class OriginRequest {
+
     @NotBlank(message = "O campo não pode estar em branco")
     private String name;
+
+    private String category;
+
+    private String address;
+
 }

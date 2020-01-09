@@ -10,9 +10,19 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @AllArgsConstructor
 public class OriginResponse {
+
     private Long id;
+
     private String name;
+
+    private String category;
+
+    private String address;
+
     private String status;
+
     private String createdAt;
+
     private String updatedAt;
+
 }

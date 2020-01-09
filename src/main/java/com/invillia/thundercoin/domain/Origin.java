@@ -25,6 +25,11 @@ public class Origin {
     @Column(nullable = false, unique = true)
     private String name;
 
+    private String category;
+
+    @Column(columnDefinition = "TEXT")
+    private String address;
+
     @Column(nullable = false)
     @Enumerated(value = EnumType.STRING)
     private StatusEnum status = StatusEnum.ACTIVE;

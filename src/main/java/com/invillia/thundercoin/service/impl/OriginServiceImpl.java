@@ -17,6 +17,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 
 @Service
@@ -81,5 +82,12 @@ public class OriginServiceImpl implements OriginService {
         origin.setStatus(StatusEnum.DISABLED);
 
         originRepository.save(origin);
+    }
+
+    @Override
+    @Transactional(readOnly = true)
+    public List<OriginResponse> findByCategory(final String category) {
+        return originRepository.findByCategory(category)
+                .stream().map(originMapper::originToOriginResponse).collect(Collectors.toList());
     }
 }
