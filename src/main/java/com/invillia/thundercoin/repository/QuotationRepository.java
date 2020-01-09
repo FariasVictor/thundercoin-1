@@ -13,8 +13,7 @@ import java.util.List;
 public interface QuotationRepository extends JpaRepository<Quotation,Long> {
     Quotation findByStatus(final StatusEnum statusEnum);
 
-    @Query("select q from Quotation q order by q.createdAt desc")
-    List<Quotation> findAllOrderByCreatedAt();
+    List<Quotation> findTop5ByOrderByCreatedAtDesc();
 
-    List<Quotation> findByCreatedAtBetween(final LocalDateTime dateInitial, final LocalDateTime dateFinal);
+    List<Quotation> findByCreatedAtBetweenOrderByIdAsc(final LocalDateTime dateInitial, final LocalDateTime dateFinal);
 }
