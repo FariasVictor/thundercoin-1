@@ -19,6 +19,8 @@ public class OriginResponse {
 
     private String address;
 
+    private String imagePath;
+
     private String status;
 
     private String createdAt;

@@ -14,8 +14,12 @@ public class OriginRequest {
     @NotBlank(message = "O campo não pode estar em branco")
     private String name;
 
+    @NotBlank(message = "O campo não pode estar em branco")
     private String category;
 
+    @NotBlank(message = "O campo não pode estar em branco")
     private String address;
 
+    @NotBlank
+    private String imagePath;
 }

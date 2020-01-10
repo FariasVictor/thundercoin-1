@@ -30,6 +30,9 @@ public class Origin {
     @Column(columnDefinition = "TEXT")
     private String address;
 
+    @Column(name="image_path")
+    private String imagePath;
+
     @Column(nullable = false)
     @Enumerated(value = EnumType.STRING)
     private StatusEnum status = StatusEnum.ACTIVE;
